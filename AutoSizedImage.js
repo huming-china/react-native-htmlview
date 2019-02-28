@@ -1,10 +1,12 @@
-import React, {PureComponent} from 'react';
+import React, { PureComponent } from 'react';
 import {
   Image,
   Dimensions,
+  Text,
+  TouchableOpacity
 } from 'react-native';
 
-const {width} = Dimensions.get('window');
+const { width } = Dimensions.get('window');
 
 const baseStyle = {
   backgroundColor: 'transparent',
@@ -18,20 +20,27 @@ export default class AutoSizedImage extends PureComponent {
       // You must specify a width and height for the image %s
       width: this.props.style.width || 1,
       height: this.props.style.height || 1,
+      error:null,
     };
   }
-
+  componentDidCatch(error,info){
+    this.setState({error:error});
+  }
+    
   componentDidMount() {
     //avoid repaint if width/height is given
     if (this.props.style.width || this.props.style.height) {
       return;
     }
     Image.getSize(this.props.source.uri, (w, h) => {
-      this.setState({width: w, height: h});
+      this.setState({ width: w, height: h });
     });
   }
 
   render() {
+    if(this.state.error){
+      return(<Text style={{color:'red',fontSize:28}}>此内容无法正确显示</Text>);
+    }
     const finalSize = {};
     if (this.state.width > width) {
       finalSize.width = width;
@@ -50,7 +59,11 @@ export default class AutoSizedImage extends PureComponent {
     } else {
       source = Object.assign(source, this.props.source, finalSize);
     }
-
-    return <Image style={style} source={source} />;
+    try {
+      return <TouchableOpacity onPress={() => { this.props.imageClick(this.props.source.uri) }}><Image style={style} source={source} /></TouchableOpacity>;
+    }
+    catch (err) {
+      //umeng上传日志预留
+    }
   }
 }

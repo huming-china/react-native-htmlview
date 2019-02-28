@@ -45,7 +45,7 @@ export default class App extends React.Component {
   render() {
     return (
       <ScrollView style={styles.container}>
-        <HTMLView value={htmlContent} renderNode={renderNode} />
+        <HTMLView values={htmlContent} renderNode={renderNode} />
       </ScrollView>
     );
   }

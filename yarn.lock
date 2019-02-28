@@ -2993,9 +2993,9 @@ lodash._basetostring@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/lodash._basetostring/-/lodash._basetostring-3.0.1.tgz#d1861d877f824a52f669832dcaf3ee15566a07d5"
 
-lodash._basevalues@^3.0.0:
+lodash._basevaluess@^3.0.0:
   version "3.0.0"
-  resolved "https://registry.yarnpkg.com/lodash._basevalues/-/lodash._basevalues-3.0.0.tgz#5b775762802bde3d3297503e26300820fdf661b7"
+  resolved "https://registry.yarnpkg.com/lodash._basevaluess/-/lodash._basevaluess-3.0.0.tgz#5b775762802bde3d3297503e26300820fdf661b7"
 
 lodash._getnative@^3.0.0:
   version "3.9.1"
@@ -3065,7 +3065,7 @@ lodash.template@^3.0.0:
   dependencies:
     lodash._basecopy "^3.0.0"
     lodash._basetostring "^3.0.0"
-    lodash._basevalues "^3.0.0"
+    lodash._basevaluess "^3.0.0"
     lodash._isiterateecall "^3.0.0"
     lodash._reinterpolate "^3.0.0"
     lodash.escape "^3.0.0"

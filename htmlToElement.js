@@ -4,6 +4,7 @@ import htmlparser from 'htmlparser2-without-node-native';
 import entities from 'entities';
 
 import AutoSizedImage from './AutoSizedImage';
+var imageClick;
 
 const defaultOpts = {
   lineBreak: '\n',
@@ -33,10 +34,12 @@ const Img = props => {
     width,
     height,
   };
-  return <AutoSizedImage source={source} style={imgStyle} />;
+  return <AutoSizedImage imageClick={imageClick} source={source} style={imgStyle} />;
 };
 
-export default function htmlToElement(rawHtml, customOpts = {}, done) {
+export default function htmlToElement(rawHtml, customOpts = {},myImageClick, done) {
+  const diyFontStyle=customOpts.diyFontStyle;
+  imageClick=myImageClick;
   const opts = {
     ...defaultOpts,
     ...customOpts,
@@ -72,12 +75,11 @@ export default function htmlToElement(rawHtml, customOpts = {}, done) {
       if (node.type === 'text') {
         const defaultStyle = opts.textComponentProps ? opts.textComponentProps.style : null;
         const customStyle = inheritedStyle(parent);
-
         return (
           <TextComponent
             {...opts.textComponentProps}
             key={index}
-            style={[defaultStyle, customStyle]}
+            style={[defaultStyle, customStyle,diyFontStyle]}
           >
             {entities.decodeHTML(node.data)}
           </TextComponent>
@@ -122,24 +124,21 @@ export default function htmlToElement(rawHtml, customOpts = {}, done) {
             break;
           }
         }
-
         let listItemPrefix = null;
         if (node.name === 'li') {
           const defaultStyle = opts.textComponentProps ? opts.textComponentProps.style : null;
           const customStyle = inheritedStyle(parent);
 
           if (parent.name === 'ol') {
-            listItemPrefix = (<TextComponent style={[defaultStyle, customStyle]}>
+            listItemPrefix = (<TextComponent style={[defaultStyle, customStyle,diyFontStyle]}>
               {`${orderedListCounter++}. `}
             </TextComponent>);
           } else if (parent.name === 'ul') {
-            listItemPrefix = (<TextComponent style={[defaultStyle, customStyle]}>
+            listItemPrefix = (<TextComponent style={[defaultStyle, customStyle,diyFontStyle]}>
               {opts.bullet}
             </TextComponent>);
           }
-          if (opts.addLineBreaks && index < list.length - 1) {
-            linebreakAfter = opts.lineBreak;
-          }
+          linebreakAfter = opts.lineBreak;
         }
 
         const {NodeComponent, styles} = opts;
